@@ -6,7 +6,8 @@ const connector = require('loopback-connector-mssql');
 class RemoteDB {
   constructor(settings) {
     this.settings = settings;
-    this.settings.connector = connector;
+    if(this.settings.connector===undefined || this.settings.connector===null)
+      this.settings.connector = connector;
   }
 
   save(model, data){

@@ -28,7 +28,7 @@ module.exports = function(Poblacion) {
         host: 'localhost',
         port: 1433,
         database: 'tierra',
-        username: 'sa',
+        username: 'SA',
         password: 'mmx2019.',
     });
     return db.save(Poblacion, data)

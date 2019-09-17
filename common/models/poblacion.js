@@ -31,7 +31,7 @@ module.exports = function(Poblacion) {
         username: 'SA',
         password: 'mmx2019.',
     });
-    return db.save(Poblacion, data)
+    return db.findOne(Poblacion, data)
     .then(res=>{
       return res;
     }).catch(err=>{

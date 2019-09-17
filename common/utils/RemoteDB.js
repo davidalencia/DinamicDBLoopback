@@ -9,14 +9,6 @@ const connector = require('loopback-connector-mssql');
  */
 class RemoteDB {
 
-  {
-      host: 'localhost',
-      port: 1433,
-      database: 'tierra',
-      username: 'SA',
-      password: 'mmx2019.',
-
-
   /**
    * Da valor a inicial a los atributos necesarios.
    * @param {Object} settings es el mismo objeto que recive DataSource.
@@ -49,14 +41,29 @@ class RemoteDB {
    * @return {Promise} Promesa que es resuelta si el registro es guardado con
    *                   exito y si ocurre algun error falla y lo regresa.
    */
-  save(model, data){
+  create(model, data){
+    return this._applyOperation(model, 'create', data);
+  }
+
+  findOrCreate(model, data){
+    return this.applyOperation(model, 'findOrCreate', data);
+  }
+
+  findOne(model, data){
+    return this.applyOperation(model, 'findOne', data);
+  }
+
+
+
+
+  applyOperation(model, operation, data){
     const settings = this.settings
     return new Promise(function(resolve, reject) {
       const ds = new DataSource(settings);
       ds.on('error', reject);
       ds.on('connected', ()=>{
           model.attachTo(ds);
-          resolve(model.create(data));
+          resolve(model[operation](data));
       });
     });
   }
